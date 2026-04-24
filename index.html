@@ -329,16 +329,14 @@ Pronunciation ${pronunciation}`;
 
         const text = getTemplateText();
 
-        await liff.sendMessages([
-          {
-            type: "text",
-            text: text
-          }
-        ]);
+await liff.sendMessages([
+  {
+    type: "text",
+    text: text
+  }
+]);
 
-        alert("テンプレートを送信しました。続けてLINEの音声ボタンから録音を送ってください。");
-
-        liff.closeWindow();
+liff.closeWindow();
 
       } catch (error) {
         console.error(error);
