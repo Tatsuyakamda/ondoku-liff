@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>音読提出テンプレート</title>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .wrap {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 10px;
+      line-height: 1.4;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #555;
+      margin: 0 0 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 18px 0 8px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #d8dde8;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 16px;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .radio-item input {
+      display: none;
+    }
+
+    .radio-item span {
+      display: block;
+      text-align: center;
+      border: 1px solid #d8dde8;
+      border-radius: 999px;
+      padding: 10px 6px;
+      font-size: 14px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .radio-item input:checked + span {
+      background: #06c755;
+      color: #fff;
+      border-color: #06c755;
+      font-weight: 700;
+    }
+
+    .preview {
+      margin-top: 22px;
+      background: #f1f4f8;
+      border-radius: 14px;
+      padding: 14px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .button {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 15px 18px;
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 18px;
+      cursor: pointer;
+    }
+
+    .main {
+      background: #06c755;
+      color: #fff;
+    }
+
+    .sub {
+      background: #eef2f7;
+      color: #333;
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #777;
+    }
+
+    .error {
+      display: none;
+      margin-bottom: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff1f1;
+      color: #b00020;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>音読提出テンプレート</h1>
+
+      <p class="lead">
+        入力後、「テンプレートを送信して録音へ進む」を押してください。
+        LINEトークに戻ったら、音声ボタンから録音を送ってください。
+      </p>
+
+      <div id="errorBox" class="error"></div>
+
+      <label for="name">名前</label>
+      <input id="name" type="text" placeholder="例：山田 太郎" />
+
+      <label for="bookNo">Book No</label>
+      <input id="bookNo" type="text" placeholder="例：12" />
+
+      <label for="title">タイトル</label>
+      <input id="title" type="text" placeholder="例：The Big Race" />
+
+      <label for="difficultWords">② むずかしかった単語</label>
+      <textarea id="difficultWords" placeholder="例：difficult / race / fast"></textarea>
+
+      <label>Accuracy</label>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="accuracy" value="★★★" checked />
+          <span>★★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="accuracy" value="★★" />
+          <span>★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="accuracy" value="★" />
+          <span>★</span>
+        </label>
+      </div>
+
+      <label>Fluency</label>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="fluency" value="★★★" checked />
+          <span>★★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="fluency" value="★★" />
+          <span>★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="fluency" value="★" />
+          <span>★</span>
+        </label>
+      </div>
+
+      <label>Pronunciation</label>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="pronunciation" value="★★★" checked />
+          <span>★★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="pronunciation" value="★★" />
+          <span>★★</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="pronunciation" value="★" />
+          <span>★</span>
+        </label>
+      </div>
+
+      <div class="preview" id="preview"></div>
+
+      <button class="button main" onclick="sendTemplate()">
+        テンプレートを送信して録音へ進む
+      </button>
+
+      <button class="button sub" onclick="updatePreview()">
+        入力内容をプレビュー
+      </button>
+
+      <p class="note">
+        ※送信後、LINEトーク画面に戻ります。続けてLINE標準の音声ボタンから録音を送ってください。
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // ここをLINE Developersで発行されたLIFF IDに差し替えてください
+    const LIFF_ID = "ここにLIFF IDを入れる";
+
+    function getCheckedValue(name) {
+      return document.querySelector(`input[name="${name}"]:checked`)?.value || "";
+    }
+
+    function getTemplateText() {
+      const name = document.getElementById("name").value.trim();
+      const bookNo = document.getElementById("bookNo").value.trim();
+      const title = document.getElementById("title").value.trim();
+      const difficultWords = document.getElementById("difficultWords").value.trim();
+
+      const accuracy = getCheckedValue("accuracy");
+      const fluency = getCheckedValue("fluency");
+      const pronunciation = getCheckedValue("pronunciation");
+
+      return `音読提出テンプレート
+
+名前：${name}
+Book No：${bookNo}
+タイトル：${title}
+
+① 今日のベスト録音
+このあと、LINEの音声ボタンから録音を送ってください。
+
+② むずかしかった単語
+→ ${difficultWords}
+
+③ 自己評価
+Accuracy ${accuracy}
+Fluency ${fluency}
+Pronunciation ${pronunciation}`;
+    }
+
+    function updatePreview() {
+      document.getElementById("preview").textContent = getTemplateText();
+    }
+
+    function showError(message) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = message;
+    }
+
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const bookNo = document.getElementById("bookNo").value.trim();
+      const title = document.getElementById("title").value.trim();
+
+      if (!name) {
+        showError("名前を入力してください。");
+        return false;
+      }
+
+      if (!bookNo) {
+        showError("Book Noを入力してください。");
+        return false;
+      }
+
+      if (!title) {
+        showError("タイトルを入力してください。");
+        return false;
+      }
+
+      document.getElementById("errorBox").style.display = "none";
+      return true;
+    }
+
+    async function initializeLiff() {
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        updatePreview();
+      } catch (error) {
+        console.error(error);
+        showError("LIFFの初期化に失敗しました。LIFF IDが正しいか確認してください。");
+      }
+    }
+
+    async function sendTemplate() {
+      if (!validateForm()) return;
+
+      try {
+        if (!liff.isInClient()) {
+          showError("LINEアプリ内から開いてください。リッチメニューから開くと送信できます。");
+          return;
+        }
+
+        const text = getTemplateText();
+
+        await liff.sendMessages([
+          {
+            type: "text",
+            text: text
+          }
+        ]);
+
+        alert("テンプレートを送信しました。続けてLINEの音声ボタンから録音を送ってください。");
+
+        liff.closeWindow();
+
+      } catch (error) {
+        console.error(error);
+        showError("送信に失敗しました。LIFFのScopeで chat_message.write が有効か確認してください。");
+      }
+    }
+
+    document.addEventListener("input", updatePreview);
+    initializeLiff();
+  </script>
+</body>
+</html>
