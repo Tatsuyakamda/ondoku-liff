@@ -157,7 +157,7 @@
 
       <p class="lead">
         入力後、「テンプレートを送信して録音へ進む」を押してください。
-        LINEトークに戻ったら、音声ボタンから録音を送ってください。
+        LINEトークに戻ったら、入力欄右側のマイクボタンから録音を送ってください。
       </p>
 
       <div id="errorBox" class="error"></div>
@@ -174,7 +174,7 @@
       <label for="difficultWords">② むずかしかった単語</label>
       <textarea id="difficultWords" placeholder="例：difficult / race / fast"></textarea>
 
-      <label>Accuracy</label>
+      <label>正確さ（まちがわずに読めたか）</label>
       <div class="radio-group">
         <label class="radio-item">
           <input type="radio" name="accuracy" value="★★★" checked />
@@ -190,7 +190,7 @@
         </label>
       </div>
 
-      <label>Fluency</label>
+      <label>流れ（英語のリズムでなめらかに読めたか）</label>
       <div class="radio-group">
         <label class="radio-item">
           <input type="radio" name="fluency" value="★★★" checked />
@@ -206,7 +206,7 @@
         </label>
       </div>
 
-      <label>Pronunciation</label>
+      <label>発音（英語の音がきれいに出せたか）</label>
       <div class="radio-group">
         <label class="radio-item">
           <input type="radio" name="pronunciation" value="★★★" checked />
@@ -233,7 +233,7 @@
       </button>
 
       <p class="note">
-        ※送信後、LINEトーク画面に戻ります。続けてLINE標準の音声ボタンから録音を送ってください。
+        ※送信後、LINEトーク画面に戻ります。続けてLINE標準のマイクボタンから録音を送ってください。
       </p>
     </div>
   </div>
@@ -263,15 +263,18 @@ Book No：${bookNo}
 タイトル：${title}
 
 ① 今日のベスト録音
-このあと、LINEの音声ボタンから録音を送ってください。
+このあと、入力欄右側のマイクボタンから録音を送ってください。
 
 ② むずかしかった単語
 → ${difficultWords}
 
 ③ 自己評価
-Accuracy ${accuracy}
-Fluency ${fluency}
-Pronunciation ${pronunciation}`;
+正確さ（まちがわずに読めたか） ${accuracy}
+流れ（英語のリズムでなめらかに読めたか） ${fluency}
+発音（英語の音がきれいに出せたか） ${pronunciation}
+
+※まだ提出完了ではありません。
+続けて、音声メッセージを送ってください。`;
     }
 
     function updatePreview() {
@@ -329,14 +332,14 @@ Pronunciation ${pronunciation}`;
 
         const text = getTemplateText();
 
-await liff.sendMessages([
-  {
-    type: "text",
-    text: text
-  }
-]);
+        await liff.sendMessages([
+          {
+            type: "text",
+            text: text
+          }
+        ]);
 
-liff.closeWindow();
+        liff.closeWindow();
 
       } catch (error) {
         console.error(error);
